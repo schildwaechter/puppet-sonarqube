@@ -31,6 +31,7 @@ class sonarqube (
   # ldap and pam are mutually exclusive. Setting $ldap will annihilate the setting of $pam
   $pam              = {},
   $crowd            = {},
+  $shibboleth       = false,
   $jdbc             = {
     url                               => 'jdbc:h2:tcp://localhost:9092/sonar',
     username                          => 'sonar',

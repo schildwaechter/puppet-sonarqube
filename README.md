@@ -66,7 +66,7 @@ The `sonarqube::plugin` defined type can be used to install SonarQube plugins. N
 
 ## Security Configuration
 
-The `sonarqube` class provides an easy way to configure security with LDAP, Crowd or PAM. Here's an example with LDAP:
+The `sonarqube` class provides an easy way to configure security with LDAP, Crowd, Shibboleth or PAM. Here's an example with LDAP:
 
     $ldap = {
       url          => 'ldap://myserver.mycompany.com',

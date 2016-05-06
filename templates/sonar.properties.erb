@@ -333,3 +333,24 @@ crowd.application: <%= @crowd['application'] %>
 # Crowd application password.
 crowd.password: <%= @crowd['password'] %>
 <% end %>
+
+<% if @shibboleth %>
+#------------------------
+# Sonar Shibboleth Plugin
+#------------------------
+
+# Automatically create users (available since Sonar 2.0).
+# When set to true, user will be created after successful authentication, if doesn't exists.
+# The default group affected to new users can be defined online, in Sonar general settings. The default value is "sonar-users".
+# Default is false.
+sonar.authenticator.createUsers: true
+
+# set security realm to use shibboleth
+sonar.security.realm=shibboleth
+
+# session initialisation url
+sonar.shibboleth.sessionInitializer=/shibboleth/validate
+<% end %>
+
+
+
