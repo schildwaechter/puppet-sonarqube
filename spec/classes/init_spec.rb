@@ -71,14 +71,27 @@ describe 'sonarqube' do
       'url'          => 'ldap://myserver.mycompany.com',
       'user_base_dn' => 'ou=Users,dc=mycompany,dc=com',
     } } }
-    it { should contain_file(sonar_properties).without_content(/sonar.security.localUsers/) }
+#    it { should contain_file(sonar_properties).without_content(/sonar.security.localUsers/) }
     it { should contain_file(sonar_properties).with_content(/sonar.security.realm=LDAP/) }
     it { should contain_file(sonar_properties).with_content(/ldap.url=ldap:\/\/myserver.mycompany.com/) }
     it { should contain_file(sonar_properties).with_content(/ldap.user.baseDn: ou=Users,dc=mycompany,dc=com/) }
   end
 
-  context "when no ldap configuration is supplied", :compile do
+  context "when no ldap or shibboleth configuration is supplied", :compile do
+    let(:params) { { :ldap => { }, :shibboleth => { } } }
     it { should contain_file(sonar_properties).without_content(/sonar.security/) }
     it { should contain_file(sonar_properties).without_content(/ldap./) }
+    it { should contain_file(sonar_properties).without_content(/shibboleth./) }
   end
+
+  context "when shibboleth is used", :compile do
+    let(:params) { { :shibboleth => {
+      'local_users'         => ['foo','bar'],
+      'session_initializer' => '/x/y'
+    } } }
+    it { should contain_file(sonar_properties).with_content(/sonar.security.localUsers=foo,bar/) }
+    it { should contain_file(sonar_properties).with_content(/sonar.shibboleth.sessionInitializer=\/x\/y/) }
+  end
+
+
 end

@@ -334,7 +334,7 @@ crowd.application: <%= @crowd['application'] %>
 crowd.password: <%= @crowd['password'] %>
 <% end %>
 
-<% if @shibboleth %>
+<% if !@shibboleth.empty? %>
 #------------------------
 # Sonar Shibboleth Plugin
 #------------------------
@@ -349,8 +349,12 @@ sonar.authenticator.createUsers: true
 sonar.security.realm=shibboleth
 
 # session initialisation url
-sonar.shibboleth.sessionInitializer=/shibboleth/validate
+sonar.shibboleth.sessionInitializer=<%= @shibboleth['session_initializer'] %>
+
+<% if @shibboleth['local_users'] -%>
+# define these users as local
+# they will be authenticated internally, not against the external source
+sonar.security.localUsers=<%= [@shibboleth['local_users']].flatten.join(',') %>
+<% end -%>
 <% end %>
-
-
 
